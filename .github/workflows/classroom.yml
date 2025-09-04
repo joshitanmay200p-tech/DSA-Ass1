@@ -7,12 +7,43 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  autograding:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Compile and Run Hidden Tests
+      # Core tests (main functionality)
+      - name: Run Core Tests
+        id: core
         run: |
-          g++ .github/classroom/test_array_ops.cpp starter_code/array_ops.cpp -o test
-          ./test
+          g++ .github/classroom/core_tests.cpp starter_code/array_ops.cpp -o core_test
+          ./core_test
+        continue-on-error: true
+
+      # Bonus tests (edge cases)
+      - name: Run Bonus Tests
+        id: bonus
+        run: |
+          g++ .github/classroom/bonus_tests.cpp starter_code/array_ops.cpp -o bonus_test
+          ./bonus_test
+        continue-on-error: true
+
+      # Report results back to GitHub Classroom
+      - name: Autograding Reporter
+        uses: education/autograding@v1
+        with:
+          results: |
+            [
+              {
+                "name": "Core Array Operations",
+                "id": "core",
+                "status": "${{ steps.core.outcome }}",
+                "points": 10
+              },
+              {
+                "name": "Bonus Edge Cases",
+                "id": "bonus",
+                "status": "${{ steps.bonus.outcome }}",
+                "points": 2
+              }
+            ]
