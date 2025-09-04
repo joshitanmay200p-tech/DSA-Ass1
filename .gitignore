@@ -1,0 +1,38 @@
+# Ignore compiled files
+*.out
+*.o
+*.exe
+*.obj
+*.dll
+*.so
+*.dylib
+
+# Ignore test binaries
+/test
+/sample
+/test.exe
+/sample.exe
+
+# Ignore logs and temp files
+*.log
+*.tmp
+*.swp
+*.bak
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Linux system files
+*~
+
+# Ignore Windows system files
+Thumbs.db
+desktop.ini
+
+# Ignore IDE/editor settings
+.vscode/
+.idea/
+*.code-workspace
+
+# Keep GitHub Actions and hidden tests visible!
+# DO NOT ignore .github/
